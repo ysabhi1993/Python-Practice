@@ -239,8 +239,8 @@ def canConstruct(ransomNote, magazine):
             return False
                 
 #intersection of two arrays
-   # def intersection(nums1, nums2):
-    #    return list(set(nums1)&set(nums2))
+def intersection(nums1, nums2):
+    return list(set(nums1)&set(nums2))
 
 #sum if squares of n integers
 def sum_of_squares(n):
@@ -291,9 +291,6 @@ def firstUniqChar(s):
                         break
             else:
                 return -1
-
-
-#def firstUniqChar_1(s):
 
 #find integer value of excel column
 def titleToNumber(s):
