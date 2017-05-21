@@ -1,0 +1,628 @@
+ABSTRACT DATATYPES:
+- model for a certain data structure.
+- only defines the methods/functions for a certain data structure with no concrete implementation.
+	Eg: stack - push(), pop(), peek()	
+- We know that there are these methods but dont know the how they are implemented.
+
+DATA STRUCTURES:
+- concrete implementation
+- designed to have efficient storing and retrieving of data, typically O(1) for insert/retrieve.
+	Eg: arrays, linked-lists, binary trees.
+
+Abstract data type					data structure(implementation of ADT)
+	stack								arrays, linked-lists
+	queues							arrays, linked-lists
+	priority queues					heap
+	dictionary/hashmap				arrays
+- ADTs are specifications and data structures are the implementations.
+
+ARRAYS:
+- collection of array elements or values each identified by an index/key.
+- Python can store items with different types.
+- can have multiple dimensions.
+- Dynamic arrays - size of the array can be changing dynamically.
+- Applications - lookup tables, hashtables, heaps
+Advantages: random access: get-item in O(1).
+Disadvantages: - Not dynamic, we need to know the size of the array at compile time.
+			   - Takes linear time to copy all elements to a new array, if the array is full.
+Array Operations:
+	ADD: can be added as long as the array is not full. can be done in constant time as long as the array is not full.
+	INSERT: inserting at a given index. Shift all the values after that index and then insert. takes linear time.
+	REMOVE: removes the indexed item. shifting all the values to fill the removed space. linear time operation. constant time to remove last element.
+
+LINKED LISTS:
+- Linked lists are composed of nodes and references/pointers pointing from one node to other. The last reference is pointing to a NULL.
+- iterate through the node. If a null is encountered, it means the linked list has ended.
+- contains two objects. one is the data object and the other is the reference.
+- can be used to implement stacks, queues etc.
+- random access is not possible as the nodes are referenced by the node before it and not yb index.
+- operations like: finding the last node, 
+				   retrieving required data from a node, accessing a node,
+				   finding a node and inserting new data after that node,
+				   - require sequential access and take linear time.
+Advantages: - Dynamic data structures
+			- can allocate memory at run-time.
+			- very efficient if we to add or remove the elements by inserting or deleting, it can be done in constant time.
+			- the size of a linked list can be increased in constant time just by changing the reference values of one node by making it point to 
+			  another node of interest.
+Disadvantages: - extra memory for references.
+			   - to get to a required node, sequential access is the only way.
+			   - very difficult to navigate backwards for singly linked lists. Doubly linked lists have to be used for that.
+			     Doubly linked lists reference both previous and next nodes. requires more space for another reference.
+Linked-lists Operations:
+	- INSERT: - inserting at the beginning by changing the reference of new node to point to the first element of the linked list. takes constant time.
+			  - insert a new element between first and last node. Change the reference of the previous node to point to the new node. Change the reference 
+			    of the new node to point to the next node in the sequence. To reach a certain position where the new node has to be inserted, linked list 
+				has to be sequentially accessed. Linear time operation.
+			  - the same applies to insert at the end. The new node is made to point to NULL.
+	- REMOVE: - removing is similar to inserting. the element that needs to be removed does not point to its next element anymore and the element 
+				that was pointing to the removed element now points to the element that followed the removed element. 
+			  - searching for the removed element takes O(n) time.
+			  - If the first element has to be removed it would take constant time.
+			  - No random access.
+- Doubly Linked-lists:
+	- One reference points to the next node and another one points to the previous node.
+	- Not very memory friendly as we have to store 2 references for each node.
+- Linkedlist Implementation: Linkedlist.py	
+	
+
+STACKS:
+	- Abstract datatype
+	- pop(), push(), peek()
+	- LIFO
+	- can be implemented using arrays and linked lists
+- PUSH: putting items one above other. O(1) time.
+- POP: remove items from the top one after another. O(1) time.
+- PEEK: returns the item on the top of the stack. O(1) time.
+- Applications:
+	- Graph algorithms: depth first search. 
+	- Finding the Euler's cycles in a graph.
+	- finding strongly connected components in a graph.
+- Difference between stack and heap:
+  - STACK:
+	- Stack is inside RAM and it is managed automatically.
+	- A call stack is an area in memory that keeps tracks of active subroutines, methods or functions in a program.
+	- It keeps track of each point to which the control should return after a task is executed.
+	- Everytime a function declares a new variable, they are pushed onto the stack. When the program exits the function all the variables are freed.
+	- Stack memory is limited.
+  - HEAPS:
+	- It is a region of memory that is not managed automatically and it is a large region of memory. Faster than stack.
+	- If we push something onto the heap, we have to manually pop it out of heap.
+	- We usually store objects in the heap memory.
+	- It can get fragmented unlike stack as it is manually managed.
+	- variables can be resized in heaps unlike stacks.
+- Stacks and recursion:
+	- When a recursion is encountered, the recursive calls are pushed onto the stack until the base case is encountered.
+	- Then return value of the base case is used to compute the next value of the recursion and that is again returned to the function that calls it.	
+	- Sometimes the stack may get full - results in a stack overflow. If the base case is not set, function calls keep getting pushed on to the stack
+	  resulting stack overflow.
+	- the system uses the call stack to implement recursion.
+- Stack Implementation: refer Stack_imp.py
+
+QUEUES:
+	- ADT
+	- operations: enqueue() - adding data, dequeue() - removing data, peek() - returns the first value inserted.
+	- FIFO
+	- implemented with dynamic arrays as well as with linked lists.
+	- BFS in graph algorithms
+- Applications:
+	- When a resource is shared between several resources we store them in a queue
+	- IO buffers
+Implementation: Queue_imp.py
+
+BINARY SEARCH TREES:
+	- Nodes(data elements) and edges(links between nodes).
+	- In a tree there should only be one path from root node to any other node.
+	- parent -> child.
+- BSTs:
+	- BSTs can do inserting, searching, removing an element in logrithmic time.
+	- each node can only have two nodes - a left node and a right node.
+	- the left child is smaller than the parent and the right child is larger than the parent.
+	- due to the above property, operations can be applied on data reduced by half at each step.
+	- height is the number of levels the tree contains.
+	- If the height of the tree is proportional to log(N), N being the number of nodes, the tree is said to be balanced. Otherwise it is unbalanced.
+	- If the tree is balanced, the logrithmic time complexity is maintained.
+- Insertion:
+	- if the data we want to insert is smaller than the root node, we go to the left otherwise we go to the right.
+	- start from the root node, if the new node is smaller go to the left and do the same otherwise go to the right and do the same.
+- Search:
+	- start at the root node and compare the data element we want to search. smaller => left; larger => right. 
+	  Do that recursively at every node until the element is found. If the element is not found, return None
+	- Its like binary search in a sorted array.
+- Deletion:
+	- soft delete: We do not remove the node but mark it as deleted.
+		- It has three possibilities:
+			- The node we want to delete is a leaf node - simply make that node null and its parent node point to null instead of that child - O(logN)
+			- the node has a single child - make the parent to point to the child of the node to be deleted. - O(logN).
+			- the node has two children:
+				- first find the largest element in the left subtree and the smallest element in the right subtree.
+				- swap the picked element from the left or right subtree with the parent node. Then the node that has to be deleted becomes one of 
+				  the three possibilities mentioned above.
+				- selecting the smallest on the right tree or the largest on the left tree has to be done such that we only need to repeat the 
+				  first two of the above mentioned cases. - O(logN)
+- Traversal:
+	- In-order traversal:
+		- visit the left subtree, then the root node, then the right subtree recursively. This will return a sorted sequence of tree elements
+	- pre-order traversal:
+		- visit the root node, then the left subtree, then the right subtree at last recursively.
+	- post-order traversal
+		- visit the left subtree, the right subtree and then the root node at the last recursively.
+- When the trees become unbalanced, all the operations become O(N) time.	
+
+AVL	TREES:
+	- Balanced binary trees.
+	- the heights of two child subtrees of any node differ by at most 1.
+	- constructing an AVL is tougher than constructing a red-black tree. But AVL trees are faster than red-black trees.
+	- every node can have only two children. the left child is smaller than parent and the right child is larger than parent.
+- Operations:
+	- Insertion: On every insertion we need to check if the tree is balanced or not. Just check if the height of left and right subtrees differs by 
+				 more than 1.
+	- Deletion and min/max operations are same as binary search trees.
+- AVL Trees - Height:
+	- the max of heights of left and right subtrees at each node have to be found, recursively.
+	height() = max(node.left.height(),node.right.height()) + 1	//incrementing by 1 implies that we are counting the node
+	- leaf nodes have height parameter 0. The leaf nodes point to null so to identify the nulls, we assign (-1) to them.
+	- If the height gets high we have to fix it by rotation.
+- Rotation:
+	- We have to update the references which is constant time operation.
+	- 1 right rotate operation makes 
+		- the left child of the root node into the new root node.
+		- the root node becomes the right child of the new root node and the right child of the (left child of the previous root node) becomes the 
+		  left child of the previous root node.
+	- 1 left rotate operation makes
+		- the right child of the root node into the new root node.
+		- the left child of (right child of the root) becomes the right child of the root and the root becomes the left child of the new root node.
+		- the previous root node becomes the left child of the new root node.
+	- all other properties of the Binary tree remains the same. Rotation in the worst case might take O(logN). So the worst case time for any operation
+	  will still remain O(logN).
+	
+	- Case1: Doubly left heavy situation:
+		- We have a root node with a leftchild. the left child has another left child.
+		- If the heights of the left subtree and the right subtree differ by more than one, we rotate the tree in that direction where the size of 
+		  the subtree is smaller than the other.
+		Source code:
+			Begin rotateright(Node node)		//node is the root node
+				Node tempLeftNode = node.getLeftNode()	//store the left child of the root node in temp node
+				Node t = tempLeftNode.getRightNode()	// store the right child of the (left child of root node) in a new 'Node' class.
+				
+				tempLeftNode.setRightNode(node)		// root node is set to be the right node of the temp node which is the new root node.
+				node.setLeftNode(t)		// then t(previously the right child of (left child of previous root node)) is set as the new left child of (right child of 
+										// the new root node)
+			
+				node.updateheight()
+				tempLeftNode.updateheight()
+	
+	- Case2: Doubly right heavy situation:
+		- Its similar to above situation except that the tree is now rotated to the left.
+		Source code:
+			Begin rotateleft(Node node)	// root node
+				Node tempRightNode = node.getRightNode()
+				Node t = tempRightNode.getLeftNode()
+				
+				tempRightNode.setLeftNode(node)
+				node.setRightNode(t)
+				
+				node.updateheight()
+				tempRightNode.updateheight()
+	
+	- Case3: When the rootnode has a left node and that node has a right node
+		- First the tree has to be made into a Doubly right heavy or Doubl left heavy trees by rotation of the appropriate node.
+	- Case4: When the rootnode has a right child and that node has a left child.
+		- Similar to Case3.
+- Illustration:
+	- Section 7 - lecture 39
+	- While converting a sorted array into a AVL tree, after every insertion, height has to be calculated and if it violates the AVL tree property, 
+	  do a rotateleft or rotateright and proceed.
+	- The rotation has to happen at the node where the tree's height property(the difference between the heights of left subtree and right subtree should 
+	  not exceed 1) of the tree is violated.
+- Applications:
+	- AVL sorting:
+		- inserting takes O(NlogN)
+		- in-order traversal takes O(N)
+		- takes O(NlogN)
+		- Searching also will take O(logN).
+		- O(N) space complexity and extra space to store the references.
+			
+RED-BLACK TREES:
+	- Running time of operations on this data structure depends on the height of the binary tree. Keeping the tree balanced results in best running-time.
+- Red-black properties:
+	- Each node is either red or black.
+	- the root node is always black.
+	- All leaves(null) are black. If for any node a child is missing, we assign a null to it. and these nulls are always black.
+	- Every red node must have two black children and no other child. It must have a black parent.
+	- Every path from a give node to its descendent null node contains the same number of black nodes.
+- Rotation is done in the same way as in AVL Trees.
+- Every new node inserted is red by default.
+- Insertion is same as insertion for binary search trees and AVL trees.
+- On every insertion we need to check if the red-black properties are violated or not.
+	- If we did:
+		1. Can use rotations or
+		2. Recolor the nodes - just change from black to red or red to black.
+- Red-Black trees possible violations:
+	- Case1: right child of a left child - recolor nodes 
+		- inserted node is red. Its parent and uncle are red but its grand-parent is black.
+		- The problem symmetric to this problem has a similar solution.
+		- After re-coloring, the parent and uncle have changed from red to black and the rootnode changed from black to red. 
+		- The newly inserted node becomes the root node of the tree under consideration.
+		- We have to check recursively, the whole tree if the red-black properties are violated or not.
+	- Case2: right child of a left child - make a left/right rotation of the parent node 
+		- the newly inserted node has color red, its parent is also red but its uncle and its grand-parent are black.
+		- Left rotation has to be done on the parent of the newly inserted node.
+		- In a symmetric problem, instead of the left rotation, right rotation is done on the parent node of the newly inserted node.
+	- Case3: left child of left child:
+		- the newly inserted node is red, its parent is red but its uncle and its grand-parent are black.
+		- First rotate the grand-parent node to the right.
+		- Then we have to do some recoloring
+		- Its symmetric partner has to be dealt similarly.
+		- In both cases, the parent and grand-parent change color.
+	- Case4: left child of left child
+		- the newly inserted node is red, the parent, uncle are red and the grand-parent is black.
+		- First, recolor parent and uncle to black and make the grand-parent red.
+		- Once recoloring is done the newly inserted node becomes the root node. (getPredecessor on the left/right subtrees and swap with root)
+		- Recursively, it is necessary to check if the red-black properties are conformed or not.
+- Example - 1,2 - lecture 53, 54
+- Difference between AVL trees and red-black trees:
+	- For insertion using AVL trees is the best.
+	- For a look-up intensive task, use AVL trees. Insertion and deletion are not the fastest as they have to be balanced everytime.
+
+PRIORITY QUEUES:
+	- Another ADT like stacks and queues
+	- Every item has an additional property called priority. 
+	- An element with higher priority is served before an element with lower priority.
+	- Can be implemented with heaps or self balancing trees. 
+	- depending on the priority values, differnet operations on elements of the priority queue are performed.
+- Operations:
+	- insertWithPriority(data, priority) - every data element must have a priority associated with it.
+	- getHighestPriorityItem() - returns the element with highest priority.
+							   - max heap - returns maximum element
+							   - min heap - returns minimum element
+	- peek() - remove the value without removing the item. 
+- Sorting: 
+	- Once we insert data into the priority queue, we can start removing elements using the priorities. We get the elements in descending order.
+		- tree sort; heap sort rely on this method
+	- If we use integers as queue elements, the integer values can be used to determine priorities.
+HEAPS:
+- Binary tree like structure where every single node can have two children.
+- Two main heap types - the min heap and the max heap.
+	- In max heap, the keys of the parents are always higher than or equal to the child node. The highest key is with the root node.
+	- In min heap, the keys of the parents are always lower than or equal to the child. Root node has the lowest value.
+	- The tree cannot be unbalanced as we insert elements in every available place.
+- Applications:
+	- Dijkstra's algorithm and prim's minimum spanning tree algorithms.
+- Heap properties:
+	- Complete - each row of the heap is filled from left to right. The last row need not be full.
+	- Every node can have 2 children left, right.
+	- Heaps can be built like trees, max heap will have maximum value as root node and min heap will have minimum value at root.
+- MAX HEAPS:
+	- Parent is greater than its children. 
+	- Assigning indeces to every node in the tree structure level by level - 0 to the root node; 1 for the left child, 2 for the right child;
+																			 3,4 for the children of left child, 5,6 to the children of right child etc.. 
+	- These indeces will be indeces in a 1D array.
+	- If the index of the parent is 'i', the index of left child is (2i + 1) and the index of the right child is (2i + 2).
+- Building a heap:
+	- First insert thel element. If the heap properties are violated, reconstruct the heap - heapify process.
+	- inserting takes O(N). heapify takes O(logN). overall running time will be O(N).
+- Remove Operation:
+	- We delete the node which we want to and replace it with the last item in the tree. Its index can be used to identify it.
+	- Then heapify has to be done so that heap properties are not violated.
+	- Removing a root node - O(1) for removing the node + O(logN) for heapify operation - O(logN)
+	- If it is not the root node, search for the node, then remove it and replace it with the last item in the tree, then heapify.
+		- O(N) + O(1) + O(logN) = O(N)
+HEAP SORT:
+	- Comparison based.
+	- uses heap datastructure we search for maximum or minimum item. Once a node is visited, we set its state to visited so that we dont visit it again.
+	- We then repeat finding the max node among the two children and continue doing it recursively.
+	- O(NlogN). in-place algorithm. It is not in-order sorting so order of elements is not going to be same.
+	- First we need to construct the heap itself from the set of numbers so that adds O(N) time.
+	-In a max heap:
+		- first the root node is replaced with the last node, returned, deleted. Then a heapify is performed so that the heap properties are not violated.
+		- This process continues recursively until there is no node in the heap.
+	- N items in the heap and swapping at every time - O(NlogN).
+Operations complexity:
+	- memory - O(N).
+	- finding Min or Max - O(1) - return the root node for max/min heaps. This is better than the time for BST
+	- Insert - append the new element at the end of the tree/1D array. Heapify has to be done if necessary - O(logN) - log(base2)N
+	- Remove - root node - O(1)
+			 - other nodes - replace the node we want to remove with the last node and remove the leaf node(last node). Then heapify. O(logN).
+- Binomial heaps and fibonacci heaps
+- Heap implementation - max_heap_imp.py
+
+	
+- Heapq built-in module in python.
+
+ASSOCIATIVE ARRAYS:
+	- also called maps or dictionaries. There is a key value pair and we associate each value to a key.
+	- usually implemented using hashtables and BSTs.
+- Operations:
+	- adding a key-value pair.
+	- removing a key-value pair.
+	- updating the value of a key.
+	- searching for a value using the key.
+	- DO NOT support sorting.
+
+HASHTABLES/Dictionaries:
+	- Array indeces can act like keys and the value in each index can be referenced using the key.
+	- If we can represent key:value pairs as arrays with index and a corresponding value we can start building hashtables
+	- hash functions are used to map keys to array indeces.
+	- keys are not always nonnegative integers. They can be strings or any other type too.
+	- Using the hashfunction, we can map any type of object to a random array index.
+- Hashfunctions:
+	- If we have integer keys we have to use the modulo function to get a value between 0 and m-1. (assuming the array is of size m).
+	- If the key is a string, we can convert each character into ASCII value and then perform some operation to get a unique index.
+	- Hash functions distribute keys uniformly across the array. It is best to use prime numbers for size of the array and in the hash functions
+	  to make sure the distributed indexes are uniform.
+- Collisions:
+	- If two keys are mapped to the same index, we say that there is a collision. For a perfect hashfunction there are no collisions which is not very 
+	  easy to identify.
+	1. Chaining: we store the later values mapped to indexes already in use, to form a linked list. New values whose keys collide with already allocated 
+	   indexes, will be inserted into the linked list at the end.
+	2. Open Addressing: If there is a collision, we try to get a new index for that key value. - better
+		- linear probing: If a collision occurs, we try the next slot. Keep doing it until an empty slot is found.
+		- Quadratic probing: If a collision occurs, we check for an empty slot 1,2,4,8.. units away from the current index until an empty slot is found.
+		- Rehashing: We use the hash function and try to find the result again until an empty slot is found.
+- Dynamic resizing:
+	- Load factor = number of entries/ number of buckets(available slots)
+		- L.F = 0 => empty; 
+		- L.F = 1 => full;
+		- L.F ~ 1 => its nearly full, the performance will decrease as searching for an empty slot takes longer.
+		- L.F ~ 0 => it is nearly empty, there is a lot of memory wasted.
+		--> Dynamic resizing is needed.
+			- resize the table if the load factor exceeds a given threshold. In python, when the hash table is 66% full, it has to be resized.
+			- resizing may take O(N) so it becomes less likely to use it.
+- Applications:
+	- Storing data + looking up - in networks/databases 
+	- Counting the number of occurrances of a word.
+	- used for substring search - (Rabin-Karp algorithm)
+
+TRIES:
+	- We want a DS that has running times for insert and search, proportional to the length of the key.
+	- get rid of collisions and add sorting method.
+	- Tries/ radix trees/ prefix trees - is used to implement associative arrays.
+		- keys are usually strings
+		- Unlike BSTs no node stores its associated key, the position of the node gives the key.
+		- All the descendents of a node have a common prefix associated with that node and the root node is associated with an empty node.
+		- Usually values are associated with leaf nodes only.
+		- the key of a certain node is a string prefixed with the key of its parent node.
+		- No left child, right child. as many as 'alphabet number' of children can be attached to each node.
+		- Each node will store a value and a reference to its children nodes, which can be as many as the number of alphabet.
+		- This could be memory inefficient as there will be lot of null values.
+
+TERNARY SEARCH TREES:
+	- better than tries in terms of memory. Sorting operation can be added. Similar to Tries in other features.
+	- slower than tries.
+	- Stores characters or strings in nodes. Each node can have - less(left child), equal(middle child), more(right child). Matched based on alphabet.
+	- Here also the keys of a node have prefix as the key of its parent node.
+	- TST are better than hashing for search misses, more flexible than BST.
+- Two operations:
+	- put: insert a new element into the ternary search tree with a given character key.
+		- If the key is smaller we go to the left, if its equal we go to the middle, if its greater we go to the right.
+		- each character in the key becomes a node and the first key has its characters inserted into the middle node of the previous node.
+			- Then we insert the value at the last node. 
+			- Insertion always begins at the root then each character is compared and is decided whether to move left or right or to the middle node.
+			- If there is no node to compare after moving to left/right/ middle, nodes are inserted as middle nodes.
+	- get: We want to get an item from the tree.
+		- If there is a mismatch, we return even before reading the whole key. Very quick
+		- To search for a key, we begin at the root node and start to compare each character of the key to the character of each node. 
+		  We decide whether to go to the left/right/middle nodes. If there is no node that follows from the comparison at any stage, we return a mismatch.
+- Applications:
+	- We should combine Tries with TSTs. So at the root node, there will be many nodes but as we move to lower levels, the number of nodes is confined 
+	  to 3 children.
+	- The auto-complete feature on phones, whatapps etc, autocorrect function.
+	- prefix matching - google search generates suggestions.
+		Usually DFS is used.
+
+GRAPH THEORY:	
+	- undirected graphs - edges dont point to any node. If A and B are connected, A points to B and B points to A.
+	- directed graphs - edges point to any one of the nodes. Either A points to B or B points to A.
+- Hamiltonian paths/ Hamiltonian cycles:
+	- It is a path that visits each vertex exactly once. Hamiltonian cycle is a Hamiltonian path that forms a cycle.
+	- important for travelling salesman problem.
+	- usually these problems are NP complete.
+- Eulerian path:
+	- It is a trial that visits each edge exactly once.
+	- Eulerian cycle is a trial that starts and ends on the same vertex.
+	- An undirected graph can have a eulerian path only if the vertex has an even degree, which is the number of edges coming out or going into the vertex.
+	- We can use heirholzer algorthm to construct graphs that have Eulerian cycles. -- important for chinese postman problem. 
+		Chinese postman problem - he wants to go to every street and return to the starting point and choose the best path(shortest path).
+- Euler's cycles:
+	- It is a cycle that visits all the edges in a graph exactly once.
+	- Euler's theorem - A connected undirected graph is Euler's graph if and only if every vertex has an even degree.
+		- Fleury algorithm:
+			- pick a vertex to start
+			- from that vertex pick a vertex to traverse
+			- traverse that edge and mark it so that you dont traverse it again.
+			- repeat it until all the edges are covered
+			**Do not traverse a bridge unless that is the only option.
+		- Hierholzer algorithm - linear time to find Euler's cycle.
+			- Initially we need two stacks and no edge is visited.
+			- Choose any vertex and push it onto the stack.
+			- While the stack is non-empty, if a vertex has an unvisited edge, push the vertex onto the stack and traverse the edge. Otherwise pop that 
+			  vertex from the stack into the result stack.
+				Eg: Euler's cycles introduction.
+			- The vertices in the result stack gives the result Euler's cycle 
+	- If the graph does not obey Euler's theorem, we have to add more edges until it obeys Euler's theorem
+
+BREADTH-FIRST-SEARCH ALGORITHM:
+	- graph traversal algorithm. Each node is visited only once. 
+	- linear time complexity in terms of number of vertices. O(V+E)
+	- Memory complexity is bad as we have to store lots of references.
+	- Dijkstra's shortest path algorithm uses BFS if all the edge weights are equal to one.
+- Implementation:
+	- use a FIFO structure- queue. Initially the queue is empty.
+	1. visit a vertex - set its status to true(visited) and add it to the queue.
+	2. while the queue is not empty, we dequeue the added vertex and store it in a 'variable'.
+	3. We then visit all the neighbours of the 'variable'. For each visited child of the 'variable' we set the status as True and enqueue it. 
+	4. Iterate through the process from step 2.
+- Applications:
+	- Edmonds-karp algorithm
+	- Cheyen's algorithm - garbage collection - it helps maintain active references on the heap. 
+		- It uses BFS to detect all the references on the heap that are active and will delete all the other references(dead references) that are not.
+	- Serialization/ deserialization of tree structures - allows the trees to be re-constructed in an efficient manner.
+
+DEPTH-FIRST-SEARCH ALGORITHM:
+	- Strategy for solving mazes.
+	- It explores the farthest node before exploring its neighbours. It then backtracks to identify remaining nodes. 
+	- Time complexity is the same O(V+E).
+	- Memory complexity is better than BFS. 
+- Implementation:
+	- Can be implemented using recursion. But the underlying ABT is going to be a stack.
+	- In an iterative approach, stack datastructure has to be used. If uses LIFO operation.
+	- The implementation is similar to that of BFS but instead of using queue, we use stack here. For iterative approach.
+	- If we want to implement it using recursion, from the start node check if there are children that are unvisited. If there are, go to each unvisited 
+	  node and recursively call the function again. 
+- Applications:
+	- Topological ordering
+	- kosaraju algorithm - used to find strongly connected components in a graph
+	- Finding if a graph has cycles, checking if a graph is Directed Acyclic Graph(DAG). - detecting cycles
+		- can be used to check locks in applications so that operating system does not freeze. If one system is waiting for other system to free a resource 
+		  and that other system is waiting for the first system, a lock occurs.
+	- Generating mazes - used to find ways out of mazes.
+
+SHORTEST PATH ALGORITHMS:
+	- Shortest path is that path where the sum of weights of edges connecting two vertices is minimized.
+		- Dijkstra's algorithm:
+			- can handle +ve edge weights only.
+			- along with finding shortest path it can find the shortest path tree as well. Calculates the shortest path from source 
+			  to all other nodes at the same time. But if the source changes, then we have to re-calculate.
+			- Time Complexity - O(VlogV + E)
+			- It is a greedy algorithm. It tries to find the node which is the closest to the current node.
+			- heaps (binomial or fibonacci), priority queues can be used. 
+			- Pseudo code:
+				class Node:
+					name
+					min_distance #minimum distance from the starting point to the given node
+					Node predecessor #it acts as the previous vertex in the shortest path tree.
+					
+					function DijkstraAlgorithm(graph, source):
+						distance[source] = 0
+						create vertex queue Q	#stores vertices
+						
+						for v in graph:
+							distance[v] = infinity
+							predecessor[v] = undefined	
+							add v to Q			#add all the vertices to the queue
+						
+						while Q:
+							u = vertex in Q with min distance
+							remove u from Q
+							
+							for each neighbour v of u:
+								tempDist = distance[u] + distance(u,v)
+								if tempDist < distance[v]:
+									distance[v] = tempDist
+									predecessor[v] = u
+						return distance[]	#contains the shortest path				
+				
+		- Bellman-ford algorithm - can handle -ve edge weights also 
+			- slower than dijkstra's algorithm but can handle -ve edge weights.
+			- It reads all the edges first in V-1 itertions. then runs for another iteration to check if there are cycles. If the cost decreases
+			  then there is a cycle.
+			- Pseudo code:
+				function bellmanFordAlgorithm(Vertices, Edges, Source):
+					distance[Source] = 0
+					
+					for v in Vertices:
+						distance[v] = infinity
+						predecessor[v] = undefined
+					
+					for i = 0 to (num of vertices) - 1:
+						for edge(u,v) and weight w:
+							tempDist = distance[u] + w
+							if tempDist < distance[v]:
+								distance[v] = tempDist
+								predecessor[v] = u 
+					
+					for edge(u,v) and weight w:
+						if distance[u] + w < distance[v]:
+							error - there is a negative cycle
+					
+			- we can terminate the algorithm if there is no change in distances between two iterations - YEN Optimization
+				- what is the typical number where we can stop iterating? 
+			- FOREX - because of the mispricing, we can detect if there is a negative cycle and if there is we can invest in it and make money
+				- USD -> INR -> YEN -> USD -- possible.
+			- GPS, routing are some examples.
+		- A* search
+		- Floyd - Warshall algorithm
+	- Google maps
+
+- APPLICATIONS:
+	- DAG - directed acyclic graph, running time reduces 
+		- topological sorting
+		- O(E+V)
+		- knapsack problem
+	- distributed algorithm:
+		- each node calculates distance between itself and every other node and stores it as a table 
+		- each node sends its tables to other nodes.
+		- when a node receives a table, if calculates the distances between all other nodes and updates its own table
+			- WWW
+	- Avidan-Shamir method:
+		- used to shrink an image. We want to make sure the image does not deform.
+		- It can be done by eliminating least significant string.
+		- We setup an energy function and remove the connected string of pixels with least energy
+			- Photoshop, GIMP
+		- We build a graph with vertices as pixels and edges point to its downward 3 neighbours
+	- CPM - Critical Path Methods:
+	- Longest Path method.
+
+SORTING ALGORITHMS:
+	- put elements of an array in an order.
+	- Comparison based:
+		- merge sort, bubble sort, quick sort, selection sort, insertion sort. - O(NlogN) is the limit
+	- Non-comparison based:
+		- radix sort, bucket sort. - O(N)
+	- In-place sorting - sorting done only by using the space allocated for the array. 
+	- recursive - divide and conquer
+	- stable sorting - the relative order of values is preserved.
+- Adaptive sorting:
+	- An adaptive algorithm can change its behaviour based on information available at runtime.
+	- Sorting algorithms benefit from local order. If a sequence in an array is already sorted, the algorithm keeps track of such sequences to 
+	  reduce the running time.
+
+- QUICK SORT:
+	- O(NlogN) in average case; O(N*N) worst case
+	- not stable, in-place
+	- divide and conquer
+		- partitioning done based on below rule
+		- choose a pivot, all elements less than the pivot are in the left subarray, all elements greater than the pivot are in the right subarray.
+		- Then the subarrays are recursively solved by finding a pivot and solving recursively again.
+	- Pseudo code:
+		quicksort(array, low, high)
+			
+			if low >= high return
+			
+			pivot = partition(array, low, high)
+			quicksort(array, low, pivot - 1s)
+			quicksort(array,pivot + 1, high)
+		end
+		
+		partition(array, low, high)
+			pivotIndex = (low + high) / 2
+			swap(pivotIndex, high)
+			
+			i = low 
+			
+			for j = low to high
+				if array[j] <= array[high]
+					swap(i,j)
+					i++
+			swap(i,high)
+			
+			return i,
+		end
+				
+			
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
